@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo FatDrip</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            position: relative;
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+        .background-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://i.postimg.cc/fRStds7R/image.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            filter: brightness(30%);
+            z-index: -1;
+        }
+        .logo-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 100px;
+        }
+        .logo-container img {
+            width: 100%;
+        }
+        .botoes-contato {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .botao-instagram, .botao-whatsapp {
+            background-color: #E1306C;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+        .botao-instagram:hover, .botao-whatsapp:hover {
+            background-color: #C13584;
+        }
+        .botao-whatsapp {
+            background-color: #25D366;
+        }
+        .botao-whatsapp:hover {
+            background-color: #1ebe5d;
+        }
+        h1 {
+            font-size: 40px;
+            font-weight: bold;
+            text-transform: uppercase;
+            color: white;
+            padding: 10px;
+            display: inline-block;
+            border-radius: 10px;
+            margin-top: 80px;
+            background-color: black;
+        }
+        .produtos-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 15px;
+            margin: 20px;
+            width: 100%;
+            max-width: 1200px;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        .produto {
+            border: 2px solid white;
+            padding: 12px;
+            width: 100%;
+            max-width: 180px;
+            min-height: 290px;
+            text-align: center;
+            background-color: black;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.2);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            cursor: pointer;
+            margin: auto;
+        }
+        .produto img {
+            width: 100%;
+            border-radius: 5px;
+            max-height: 130px;
+            object-fit: contain;
+        }
+        .botao-comprar {
+            width: 70%;
+            padding: 8px;
+            margin: auto;
+            background-color: green;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 5px;
+            transition: 0.3s;
+            font-size: 12px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .botao-comprar:hover {
+            background-color: darkgreen;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            text-align: center;
+            padding-top: 50px;
+            z-index: 999;
+        }
+        .modal-content {
+            background: black;
+            padding: 20px;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 500px;
+            margin: auto;
+        }
+        .modal img {
+            width: 100%;
+            border-radius: 5px;
+        }
+        .fechar {
+            display: block;
+            background: red;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 24px;
+            }
+            .produto {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="background-overlay"></div>
+
+    <h1>Catálogo FatDrip</h1>
+
+    <div class="logo-container">
+        <img src="https://i.postimg.cc/Gp12syhX/image.png" alt="Logo FatDrip">
+    </div>
+
+    <div class="botoes-contato">
+        <a class="botao-instagram" href="https://www.instagram.com/fatdrip_br" target="_blank">Instagram</a>
+        <a class="botao-whatsapp" href="https://wa.me/5567996403881" target="_blank">WhatsApp</a>
+    </div>
+
+    <div class="produtos-container" id="produtos"></div>
+
+    <script>
+        function mostrarDetalhes(id) {
+            document.getElementById(id).style.display = "block";
+        }
+        function fecharDetalhes(id) {
+            document.getElementById(id).style.display = "none";
+        }
+
+        const produtos = [
+            { id: 1, nome: "Tesla Fusion Grey Blue", img: "https://i.postimg.cc/6QwWQxYS/image.png", descricao: "Tamanho: 40" },
+            { id: 2, nome: "Tesla Fusion Branco Dourado", img: "https://i.postimg.cc/0Qy9pdg0/image.png", descricao: "Tamanhos: 39, 40, 41, 42" },
+            { id: 3, nome: "Tesla Fusion Black White", img: "https://i.postimg.cc/gJtm4XmF/image.png", descricao: "Tamanho: 35" },
+            { id: 4, nome: "Fusion White Light Blue", img: "https://i.postimg.cc/NFyYnsjy/image.png", descricao: "Tamanhos: 38, 39, 40, 41, 42, 43" },
+
+            { id: 5, nome: "Boné Hocks Fivepanel Sport Branco Roxo Verde", img: "https://i.postimg.cc/dQCGkmr5/image.png", descricao: "" },
+            { id: 6, nome: "Boné Hocks Five Panel Brisa Branco Azul", img: "https://i.postimg.cc/bJtSnpDZ/image.png", descricao: "" },
+            { id: 7, nome: "Boné Ous 5panel Phibo Fili Preto", img: "https://i.postimg.cc/hGMpY8pL/image.png", descricao: "" },
+            { id: 8, nome: "Boné Öus 5 Panel Fili Musgo Lançamento Envio Imediato", img: "https://i.postimg.cc/sxGm1kym/image.png", descricao: "" },
+
+            { id: 9, nome: "Bermuda Brothas Cash Preta Estonada Hip Hop", img: "https://i.postimg.cc/tgLtwrFV/image.png", descricao: "Tamanho: 42" },
+            { id: 10, nome: "Bermuda Brothas", img: "https://i.postimg.cc/1Xy61bX4/image.png", descricao: "Tamanhos: 42, 44" },
+            { id: 11, nome: "Bermuda Brothas And Cash Bordado Dados", img: "https://i.postimg.cc/43Tx0Vmx/image.png", descricao: "Tamanhos: 40, 42, 44" },
+            { id: 12, nome: "Produto Esgotado", img: "https://i.postimg.cc/zvMJFRs5/image.png", descricao: "Este item está esgotado", esgotado: true },
+
+            { id: 13, nome: "Camiseta Brothas And Cash Bandana", img: "https://i.postimg.cc/VkXYXvDQ/image.png", descricao: "Cor: Amarelo - Tamanho: GG" },
+            { id: 14, nome: "Produto Esgotado", img: "https://i.postimg.cc/zvMJFRs5/image.png", descricao: "Este item está esgotado", esgotado: true },
+            { id: 15, nome: "Produto Esgotado", img: "https://i.postimg.cc/zvMJFRs5/image.png", descricao: "Este item está esgotado", esgotado: true },
+            { id: 16, nome: "Produto Esgotado", img: "https://i.postimg.cc/zvMJFRs5/image.png", descricao: "Este item está esgotado", esgotado: true },
+
+            { id: 17, nome: "Calça Cargo Pixain", img: "https://i.postimg.cc/sX78NGGs/image.png", descricao: "Cor: Azul-claro - Tamanhos: 40, 42, 44, 48" },
+            { id: 18, nome: "Calça Pixain Chicano", img: "https://i.postimg.cc/tCTk1VRJ/image.png", descricao: "Cor: Preto - Tamanho: 42" },
+            { id: 19, nome: "Calça Cargo Azul Escuro", img: "https://i.postimg.cc/Z5Nr38Gb/image.png", descricao: "Cor: Azul-escuro - Tamanhos: 38, 40, 42, 44, 46" },
+            { id: 20, nome: "Produto Esgotado", img: "https://i.postimg.cc/zvMJFRs5/image.png", descricao: "Este item está esgotado", esgotado: true },
+        ];
+
+        const container = document.getElementById("produtos");
+        produtos.forEach(p => {
+            const clique = p.esgotado ? "" : `onclick="mostrarDetalhes('produto${p.id}')"`;
+
+            container.innerHTML += `
+                <div class="produto" ${clique}>
+                    <img src="${p.img}" alt="${p.nome}">
+                    <h2>${p.nome}</h2>
+                    <p>${p.descricao}</p>
+                </div>
+                <div id="produto${p.id}" class="modal">
+                    <div class="modal-content">
+                        <h2>${p.nome}</h2>
+                        <img src="${p.img}" alt="${p.nome}">
+                        <p>${p.descricao}</p>
+                        <a class="botao-comprar" href="https://wa.me/5567996403881?text=A%20sua%20compra%20está%20quase%20finalizada,%20só%20fale%20com%20nosso%20atendente%20para%20fechar%20a%20sua%20compra%20FaT">Comprar Agora</a>
+                        <span class="fechar" onclick="fecharDetalhes('produto${p.id}')">Fechar</span>
+                    </div>
+                </div>
+            `;
+        });
+    </script>
+</body>
+</html>
+
